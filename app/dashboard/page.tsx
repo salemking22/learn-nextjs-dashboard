@@ -6,15 +6,12 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 import styles from "./dashboard.module.css";
-import Card from "../../components/Card";
+import DashboardContent from "./DashboardContent";
 
 async function getProfileData() {
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : `https://${process.env.VERCEL_URL}`;
-
-  const res = await fetch(new URL("/api/profile", baseUrl), { cache: "no-store" });
+  const res = await fetch("https://learn-nextjs-dashboard-self.vercel.app/api/profile", {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch profile data");
@@ -26,21 +23,10 @@ async function getProfileData() {
 export default async function DashboardPage() {
   const data = await getProfileData();
 
-  const profileData = [
-    { label: "Name", value: data.name },
-    { label: "Role", value: data.role },
-  ];
-
-  const progressData = [
-    { label: "Chapter", value: data.chapter },
-    { label: "Status", value: data.status },
-  ];
-
   return (
     <div className={styles.container}>
       <h1>Dashboard</h1>
-      <Card title="Profile" items={profileData} />
-      <Card title="Progress" items={progressData} />
+      <DashboardContent data={data} />
     </div>
   );
 }
