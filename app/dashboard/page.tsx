@@ -9,7 +9,8 @@ import styles from "./dashboard.module.css";
 import Card from "../../components/Card";
 
 async function getProfileData() {
-  const res = await fetch("/api/profile", { cache: "no-store" });
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const res = await fetch(`${baseUrl}/api/profile`, { cache: "no-store" });
 
   if (!res.ok) {
     throw new Error("Failed to fetch profile data");
