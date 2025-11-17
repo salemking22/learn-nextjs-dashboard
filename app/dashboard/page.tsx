@@ -9,7 +9,7 @@ import styles from "./dashboard.module.css";
 import Card from "../../components/Card";
 
 async function getProfileData() {
-  const res = await fetch("http://localhost:3000/api/profile");
+  const res = await fetch("/api/profile", { cache: "no-store" });
 
   if (!res.ok) {
     throw new Error("Failed to fetch profile data");
