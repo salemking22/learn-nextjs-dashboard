@@ -7,10 +7,12 @@ export const dynamic = "force-dynamic";
 
 import styles from "./dashboard.module.css";
 import Card from "../../components/Card";
+import { headers } from "next/headers";
 
 async function getProfileData() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const res = await fetch(`${baseUrl}/api/profile`, { cache: "no-store" });
+  const host = headers().get("host");
+  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+  const res = await fetch(`${protocol}://${host}/api/profile`, { cache: "no-store" });
 
   if (!res.ok) {
     throw new Error("Failed to fetch profile data");
