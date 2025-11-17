@@ -7,12 +7,14 @@ export const dynamic = "force-dynamic";
 
 import styles from "./dashboard.module.css";
 import Card from "../../components/Card";
-import { headers } from "next/headers";
 
 async function getProfileData() {
-  const host = headers().get("host");
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-  const res = await fetch(`${protocol}://${host}/api/profile`, { cache: "no-store" });
+  const baseUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : `https://${process.env.VERCEL_URL}`;
+
+  const res = await fetch(new URL("/api/profile", baseUrl), { cache: "no-store" });
 
   if (!res.ok) {
     throw new Error("Failed to fetch profile data");
