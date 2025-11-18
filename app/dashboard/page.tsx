@@ -7,6 +7,7 @@ export const dynamic = "force-dynamic";
 
 import styles from "./dashboard.module.css";
 import DashboardContent from "./DashboardContent";
+import AuthButton from "@/components/AuthButton"; // ✅ Added import
 
 async function getProfileData() {
   const res = await fetch("https://learn-nextjs-dashboard-self.vercel.app/api/profile", {
@@ -27,6 +28,9 @@ export default async function DashboardPage() {
     <div className={styles.container}>
       <h1>Dashboard</h1>
       <DashboardContent data={data} />
+      <div className="mt-6">
+        <AuthButton /> {/* ✅ Button added here */}
+      </div>
     </div>
   );
 }
